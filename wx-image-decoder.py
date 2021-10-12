@@ -29,7 +29,7 @@ def decode_file(original):
         with open(original, 'rb') as dat:
             first_line = take(1, dat)[0];
             (ext, key) = detect_key(first_line)
-            print(f'File: {original}, Found match ext: {ext}, key: {hex(key)}, File digest:{list(original[0:6])}')
+            print(f'File: {original}, Found match ext: {ext}, key: {hex(key)}, File digest:{list(first_line[0:6])}')
             with open(f'{original}.{ext}', 'wb') as img:
                 img.write(bytes(b ^ key for b in first_line))
                 for buf in dat:
@@ -40,5 +40,5 @@ def decode_file(original):
 
 #os.chdir("D:\\WeChatFiles\\wxuser\\FileStorage\\Image\\2021-10")
 
-for f in glob.glob('*.dat', recursive=True):
+for f in glob.glob('**/*.dat', recursive=True):
     decode_file(f)
